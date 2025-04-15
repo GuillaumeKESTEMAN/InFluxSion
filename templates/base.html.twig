@@ -1,17 +1,34 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
-
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    {% endblock %}
+    <title>{% block title %}InFluxSion{% endblock %}</title>
+</head>
+<body class="bg-[#1D1D1D] text-white">
+    <header class="flex items-center justify-between fixed top-0 w-full mt-2 px-4">
+        <img src="{{ asset('icons/logo.svg') }}" alt="InFluxSion" class="w-[100px] h-[100px]">
+        <div class="bg-white bg-opacity-[0.02] p-4 flex items-center space-x-12 rounded-full mx-auto">
+            <nav class="flex space-x-12">
+                <a href="/" class="{{ app.request.pathinfo == '/' ? 'text-[#1EB344]' : 'text-[#C7C7C7]' }} hover:text-[#1EB344]">
+                    {{ ux_icon('majesticons:article-line', {width: '24px', height: '24px'}) }}
+                </a>
+                <a href="/sources" class="{{ app.request.pathinfo == '/sources' ? 'text-[#1EB344]' : 'text-[#C7C7C7]' }} hover:text-[#1EB344]">
+                    {{ ux_icon('material-symbols:database', {width: '24px', height: '24px'}) }}
+                </a>
+            </nav>
+            <form method="POST" action="/logout" class="flex items-center">
+                <button type="submit" class="text-[#C7C7C7] hover:text-[#FF0000]">
+                    {{ ux_icon('prime:sign-out', {width: '24px', height: '24px'}) }}
+                </button>
+            </form>
+        </div>
+    </header>
+    <main class="p-6 mt-20">
         {% block body %}{% endblock %}
-    </body>
+    </main>
+</body>
 </html>
