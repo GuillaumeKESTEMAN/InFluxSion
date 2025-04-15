@@ -2,15 +2,21 @@
 
 namespace App\Controller;
 
+use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AbstractController
 {
-    #[Route('/')]
-    public function index(): Response
+    #[Route('/', name: 'articles', methods: ['GET'])]
+    public function index(ArticleRepository $articleRepository): Response
     {
-        return $this->render('index.html.twig');
+        $latestArticles = $articleRepository->findLatestArticles(10);
+
+        return $this->render('index.html.twig', [
+            'articles' => $latestArticles,
+        ]);
     }
 }
+

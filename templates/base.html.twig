@@ -18,10 +18,10 @@
         <img src="{{ asset('icons/logo.svg') }}" alt="InFluxSion" class="w-[100px] h-[100px] absolute left-4">
         <div class="bg-white bg-opacity-[0.02] p-4 flex items-center space-x-12 rounded-full text-center mx-auto">
             <nav class="flex space-x-12">
-                <a href="/" class="{{ app.request.pathinfo == '/' ? 'text-green-600' : 'text-[#C7C7C7]' }} hover:text-green-600">
+                <a href="{{ path('articles') }}" class="{{ app.request.pathinfo == path('articles') ? 'text-green-600' : 'text-[#C7C7C7]' }} hover:text-green-600">
                     {{ ux_icon('majesticons:article-line', {width: '24px', height: '24px'}) }}
                 </a>
-                <a href="/sources" class="{{ app.request.pathinfo == '/sources' ? 'text-green-600' : 'text-[#C7C7C7]' }} hover:text-green-600">
+                <a href="{{ path('sources') }}" class="{{ app.request.pathinfo == path('sources') ? 'text-green-600' : 'text-[#C7C7C7]' }} hover:text-green-600">
                     {{ ux_icon('material-symbols:database', {width: '24px', height: '24px'}) }}
                 </a>
             </nav>
