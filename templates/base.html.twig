@@ -9,22 +9,25 @@
     <title>{% block title %}InFluxSion{% endblock %}</title>
 </head>
 <body class="bg-[#1D1D1D] text-white">
-    <header class="bg-white bg-opacity-[0.02] text-white p-4 flex items-center space-x-12 fixed left-1/2 transform -translate-x-1/2 top-0 w-max rounded-full mt-2">
-        <nav class="flex space-x-12">
-            <a href="/" class="{{ app.request.pathinfo == '/' ? 'text-[#1EB344]' : 'text-[#C7C7C7]' }} hover:text-[#1EB344]">
-                {{ ux_icon('majesticons:article-line', {width: '24px', height: '24px'}) }}
-            </a>
-            <a href="/sources" class="{{ app.request.pathinfo == '/sources' ? 'text-[#1EB344]' : 'text-[#C7C7C7]' }} hover:text-[#1EB344]">
-                {{ ux_icon('material-symbols:database', {width: '24px', height: '24px'}) }}
-            </a>
-        </nav>
-        <form method="POST" action="/logout" class="flex items-center">
-            <button type="submit" class="text-[#C7C7C7] hover:text-[#FF0000]">
-                {{ ux_icon('prime:sign-out', {width: '24px', height: '24px'}) }}
-            </button>
-        </form>
+    <header class="flex items-center justify-between fixed top-0 w-full mt-2 px-4">
+        <img src="{{ asset('icons/logo.svg') }}" alt="InFluxSion" class="w-[100px] h-[100px]">
+        <div class="bg-white bg-opacity-[0.02] p-4 flex items-center space-x-12 rounded-full mx-auto">
+            <nav class="flex space-x-12">
+                <a href="/" class="{{ app.request.pathinfo == '/' ? 'text-[#1EB344]' : 'text-[#C7C7C7]' }} hover:text-[#1EB344]">
+                    {{ ux_icon('majesticons:article-line', {width: '24px', height: '24px'}) }}
+                </a>
+                <a href="/sources" class="{{ app.request.pathinfo == '/sources' ? 'text-[#1EB344]' : 'text-[#C7C7C7]' }} hover:text-[#1EB344]">
+                    {{ ux_icon('material-symbols:database', {width: '24px', height: '24px'}) }}
+                </a>
+            </nav>
+            <form method="POST" action="/logout" class="flex items-center">
+                <button type="submit" class="text-[#C7C7C7] hover:text-[#FF0000]">
+                    {{ ux_icon('prime:sign-out', {width: '24px', height: '24px'}) }}
+                </button>
+            </form>
+        </div>
     </header>
-    <main class="p-6 mt-14">
+    <main class="p-6 mt-20">
         {% block body %}{% endblock %}
     </main>
 </body>
