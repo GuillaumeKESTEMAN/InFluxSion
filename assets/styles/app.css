@@ -2,31 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body {
     background-color: #1D1D1D;
 }
 
 html {
     font-family: 'K2D', sans-serif;
-}
-
-.aurora-glow {
-    background: radial-gradient(circle at 20% 20%, #00ffcc, transparent 25%),
-    radial-gradient(circle at 80% 80%, #00ff99, transparent 30%),
-    radial-gradient(circle at 50% 50%, #00ffff, transparent 30%);
-    filter: blur(100px);
-    opacity: 0.2;
-    animation: auroraMove 20s ease-in-out infinite;
-}
-
-@keyframes auroraMove {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg) scale(1);
-    }
-    50% {
-        transform: translate(-50%, -50%) rotate(45deg) scale(1.1);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(0deg) scale(1);
-    }
 }
