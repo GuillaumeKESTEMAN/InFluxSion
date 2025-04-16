@@ -3,11 +3,43 @@
 {% block title %}Sources{% endblock %}
 
 {% block body %}
-    <div>
-        {{ include('components/_modal.html.twig', {
-            modalTitle: 'Add new source',
-            modalBody: 'test'
-        }) }}
+    <div class="flex flex-col ml-9 ">
+        <button id="openDialogBtn" class="flex text-[#1AD9CB] w-fit" >{{ ux_icon('line-md:plus-circle', {width: '40px', height: '40px'}) }}</button>
+
+        <div class="flex flex-col items-center">
+            <div id="myDialog" class="hidden absolute  backdrop-blur-xl flex items-center z-50 bg-white/5 p-6 rounded-lg shadow-lg w-lg">
+                <h1 class="text-3xl mb-4 bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">Ajouter une source</h1>
+                <form class="flex items-center flex-col gap-3" action="addSource">
+                    <input
+                            class="rounded-full w-96 h-10 text-lg backdrop-blur-xl bg-white/5 placeholder-gray-400 px-6 text-gray-200"
+                            type="text"
+                            placeholder="Url de la source"
+                            name="source">
+                    <input
+                            class="rounded-full w-96 h-10 text-lg backdrop-blur-xl bg-white/5 placeholder-gray-400 px-6 text-gray-200"
+                            type="text"
+                            placeholder="Nom de la source"
+                            name="source">
+                    <div class="flex justify-between">
+                            <button
+                                    id="closeDialogBtn"
+                                    class="mt-4 px-4 py-1 text-green-400 rounded-full"
+                            >Fermer</button>
+                            <button
+                                    id="addSourceBtn"
+                                    type="submit"
+                                    class="rounded-full px-4 py-1 mt-4 text-green-400 border-2 border-green-400 hover:text-white hover:bg-green-400 transition-colors duration-300 ease-in-out"
+                            >Ajouter</button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+
+
+        <h1 class="text-2xl font-bold">Bienvenue sur la page des sources</h1>
+        <p>Contenu de la page des sources...</p>
     </div>
 
     <h1 class="text-2xl font-bold text-center mb-8">Liste des Sources</h1>
@@ -24,4 +56,21 @@
             <p class="text-center text-[#868383]">Aucune source disponible.</p>
         {% endfor %}
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const openBtn = document.getElementById("openDialogBtn");
+            const closeBtn = document.getElementById("closeDialogBtn");
+            const dialog = document.getElementById("myDialog");
+
+            openBtn.addEventListener("click", function () {
+                dialog.style.display = "block";
+            });
+
+            closeBtn.addEventListener("click", function () {
+                dialog.style.display = "none";
+            });
+        });
+    </script>
 {% endblock %}
+
+
