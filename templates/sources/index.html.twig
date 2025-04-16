@@ -48,14 +48,16 @@
         {% for source in sources %}
             <div class="flex items-center w-full bg-[#1D1D1D] p-4 hover:bg-[#2A2A2A] transition border-b-2 border-green-600 rounded-none">
                 <div class="ml-4 text-[#868383]">
-                    <h2 class="font-bold text-lg">{{ source.name }}</h2>
-                    <p class="text-sm">{{ source.url }}</p>
-                    <button class="editSourceBtn bg-blue-500 text-white px-4 py-2 rounded-md"
-                        data-url="{{ source.url }}"
-                        data-name="{{ source.name }}"
-                        data-id="{{ source.id }}">
-                        Modifier
-                    </button>
+                    <div class="flex items-center gap-4">                    
+                        <h2 class="font-bold text-lg">{{ source.name }}</h2>
+                        <button class="editSourceBtn bg-blue-500 text-white px-4 py-2 rounded-md"
+                            data-url="{{ source.url }}"
+                            data-name="{{ source.name }}"
+                            data-id="{{ source.id }}">
+                            Modifier
+                        </button>
+                    </div>
+                    <a href="{{ source.url }}" class="text-sm" target="_blank">{{ source.url }}</a> 
                 </div>
             </div>
         {% else %}
