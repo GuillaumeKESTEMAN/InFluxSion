@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250415151958 extends AbstractMigration
+final class Version20250416094432 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -25,6 +25,12 @@ final class Version20250415151958 extends AbstractMigration
         SQL);
         $this->addSql(<<<'SQL'
             COMMENT ON COLUMN article.date IS '(DC2Type:datetime_immutable)'
+        SQL);
+        $this->addSql(<<<'SQL'
+            CREATE TABLE "user" (id SERIAL NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))
+        SQL);
+        $this->addSql(<<<'SQL'
+            CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON "user" (email)
         SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE messenger_messages (id BIGSERIAL NOT NULL, body TEXT NOT NULL, headers TEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, available_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, delivered_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))
@@ -71,6 +77,9 @@ final class Version20250415151958 extends AbstractMigration
         SQL);
         $this->addSql(<<<'SQL'
             DROP TABLE article
+        SQL);
+        $this->addSql(<<<'SQL'
+            DROP TABLE "user"
         SQL);
         $this->addSql(<<<'SQL'
             DROP TABLE messenger_messages
