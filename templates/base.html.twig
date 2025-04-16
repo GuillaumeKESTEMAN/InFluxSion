@@ -13,6 +13,7 @@
     <title>{% block title %}InFluxSion{% endblock %}</title>
 </head>
 <body class="bg-[#1D1D1D] text-white">
+{% if show_header is not defined or show_header %}
     <header class="flex items-center justify-between fixed top-0 w-full mt-2 px-4">
         <img src="{{ asset('icons/logo.svg') }}" alt="InFluxSion" class="w-[100px] h-[100px]">
         <div class="bg-white bg-opacity-[0.02] p-4 flex items-center space-x-12 rounded-full mx-auto">
@@ -31,7 +32,8 @@
             </form>
         </div>
     </header>
-    <main class="p-6 mt-20">
+{% endif %}
+    <main>
         {% block body %}{% endblock %}
     </main>
 </body>

@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
-
+{% set show_header = false %}
 {% block title %}Register{% endblock %}
 {% block body %}
-    <div class="flex justify-evenly h-screen items-center">
+    <div class="flex justify-evenly items-center h-screen ">
         <div class="flex flex-col h-fit gap-3">
-            <h1 class="text-7xl bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">Bienvenue à inFluxSion</h1>
+            <h1 class="text-6xl bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">Bienvenue à inFluxSion</h1>
             <h2 class="text-3xl text-white">Tous vos articles au même endroit.</h2>
         </div>
         <div class="relative flex flex-col h-fit">
@@ -16,7 +16,6 @@
                 <button class="rounded-full h-14 text-2xl backdrop-blur-sm bg-white/5 text-green-600 border-2 border-green-600">Créer mon compte</button>
             </form>
         </div>
-
     </div>
 {% endblock %}
 
