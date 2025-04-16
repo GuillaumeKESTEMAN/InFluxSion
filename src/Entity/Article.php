@@ -29,6 +29,10 @@ class Article
     #[ORM\Column]
     private ?DateTimeImmutable $date = null;
 
+    #[ORM\ManyToOne(targetEntity: Source::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Source $source = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -100,4 +104,17 @@ class Article
 
         return $this;
     }
+
+    public function getSource(): ?Source
+    {
+        return $this->source;
+    }
+
+    public function setSource(?Source $source): static
+    {
+        $this->source = $source;
+
+        return $this;
+    }
 }
+
