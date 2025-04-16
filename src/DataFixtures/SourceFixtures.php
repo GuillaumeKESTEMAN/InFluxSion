@@ -15,7 +15,6 @@ class SourceFixtures extends Fixture
             $source->setUrl("https://source-$i.com");
             $manager->persist($source);
 
-            // Ajout de la référence
             $this->addReference("source_$i", $source);
         }
 

@@ -14,11 +14,9 @@ class UserSourceFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i <= 3; $i++) {
-            // Récupération de la référence utilisateur
             $user = $this->getReference("user_$i", User::class);
 
             for ($j = 1; $j <= 2; $j++) {
-                // Récupération de la référence source
                 $source = $this->getReference("source_$j", Source::class);
 
                 $userSource = new UserSource();
