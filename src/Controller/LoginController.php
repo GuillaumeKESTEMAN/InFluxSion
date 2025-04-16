@@ -13,6 +13,6 @@ class LoginController extends AbstractController
     #[Route('/login')]
     public function index(): Response
     {
-        return $this->render('sources/login.html.twig');
+        return $this->render('login/login.html.twig');
     }
 }

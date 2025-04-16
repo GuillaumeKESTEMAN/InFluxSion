@@ -9,6 +9,6 @@ class RegisterController extends abstractController
 {
     #[Route('/register', name: 'register')]
     public function register(){
-        return $this->render('sources/register.html.twig');
+        return $this->render('register/register.html.twig');
     }
 }
