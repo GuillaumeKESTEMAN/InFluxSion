@@ -33,7 +33,7 @@
         </div>
     </header>
 {% endif %}
-    <main>
+    <main class="{{ show_header is not defined or show_header ? 'mt-20' : '' }}">
         {% block body %}{% endblock %}
     </main>
 </body>
