@@ -1,19 +1,45 @@
 {% extends 'base.html.twig' %}
 {% set show_header = false %}
 {% block title %}Login{% endblock %}
+
 {% block body %}
-    <div class="flex justify-evenly items-center h-screen ">
+    <div class="flex justify-evenly items-center h-screen">
         <div class="flex flex-col h-fit gap-3">
-            <h1 class="text-6xl bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">Bon retour parmis nous</h1>
+            <h1 class="text-6xl bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">Bon retour parmi nous</h1>
             <h2 class="text-3xl text-white">Nous sommes ravis de vous revoir.</h2>
         </div>
         <div class="relative flex flex-col h-fit">
             <div class="absolute -inset-20 z-0 animate-pulse-slow rounded-full blur-[220px] opacity-[0.02] bg-gradient-to-r from-green-600 to-cyan-600"></div>
 
-            <form class="relative z-10 flex flex-col h-fit w-80 gap-2" action="login">
-                <input class="rounded-full h-14 text-2xl backdrop-blur-xl bg-white/5 placeholder-gray-400 p-7 text-gray-400" type="text" placeholder="Mail" name="email" required>
-                <input class="rounded-full h-14 text-2xl backdrop-blur-sm bg-white/5 placeholder-gray-400 p-7 text-gray-400" type="password" placeholder="Mot de passe" name="password" required>
-                <button class="rounded-full h-14 text-2xl backdrop-blur-sm bg-white/5 text-green-600 border-2 border-green-600">Je me connecte</button>
+            {% if error %}
+                <div class="mb-4 p-3 rounded bg-red-100 text-red-700 border border-red-200">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            <form class="relative z-10 flex flex-col h-fit w-80 gap-2"
+                  action="{{ path('app_login') }}" method="post">
+                <input
+                        class="rounded-full h-14 text-2xl backdrop-blur-xl bg-white/5 placeholder-gray-400 p-7 text-gray-400"
+                        type="text"
+                        id="username"
+                        name="_username"
+                        placeholder="Mail"
+                        value="{{ last_username }}"
+                        required
+                >
+                <input
+                        class="rounded-full h-14 text-2xl backdrop-blur-sm bg-white/5 placeholder-gray-400 p-7 text-gray-400"
+                        type="password"
+                        id="password"
+                        name="_password"
+                        placeholder="Mot de passe"
+                        required
+                >
+                <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+                <button class="rounded-full h-14 text-2xl backdrop-blur-sm bg-white/5 text-green-600 border-2 border-green-600">
+                    Je me connecte
+                </button>
             </form>
         </div>
     </div>
