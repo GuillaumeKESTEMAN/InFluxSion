@@ -1,18 +1,33 @@
 {% extends 'base.html.twig' %}
-
+{% set show_header = false %}
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="flex justify-evenly items-center h-screen">
+        <div class="flex flex-col h-fit gap-3">
+            <h1 class="text-6xl bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">Bienvenue à InFluxSion</h1>
+            <h2 class="text-3xl text-white">Tous vos articles au même endroit.</h2>
+        </div>
+        <div class="relative flex flex-col h-fit">
+            <div class="absolute -inset-20 z-0 animate-pulse-slow rounded-full blur-[220px] opacity-[0.02] bg-gradient-to-r from-green-600 to-cyan-600"></div>
 
-    {{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            {{ form_errors(registrationForm) }}
+            {{ form_start(registrationForm, {'attr': {'class': 'relative z-10 flex flex-col h-fit w-80 gap-2'}}) }}
+            {{ form_row(registrationForm.email, {
+                'attr': {
+                    'class': 'rounded-full h-14 text-2xl backdrop-blur-xl bg-white/5 placeholder-gray-400 p-7 text-gray-400',
+                    'placeholder': 'Mail'
+                }
+            }) }}
+            {{ form_row(registrationForm.plainPassword, {
+                'label': 'Mot de passe',
+                'attr': {
+                    'class': 'rounded-full h-14 text-2xl backdrop-blur-sm bg-white/5 placeholder-gray-400 p-7 text-gray-400',
+                    'placeholder': 'Mot de passe'
+                }
+            }) }}
+            <button type="submit" class="rounded-full h-14 text-2xl backdrop-blur-sm bg-white/5 text-green-600 border-2 border-green-600">Créer mon compte</button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
 {% endblock %}
