@@ -2,6 +2,7 @@
 
 namespace App\UseCase;
 
+use Exception;
 use RuntimeException;
 use App\Entity\Source;
 use App\Entity\UserSource;
@@ -33,6 +34,18 @@ class ManageSourceUseCase
 
         $this->userSourceRepository->save($userSource);
     }
+
+    public function updateSourceName(Source $source, string $newName): void
+    {
+        $userSource = $this->userSourceRepository->findOneBy(['source' => $source]);
+    
+        if (!$userSource) {
+            throw new \Exception("Impossible de trouver cette source.");
+        }
+    
+        $userSource->setName($newName);
+        $this->userSourceRepository->save($userSource);
+    }       
 
     private function isValidRSS(string $url): bool
     {
