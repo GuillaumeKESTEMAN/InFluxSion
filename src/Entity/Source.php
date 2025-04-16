@@ -14,7 +14,7 @@ class Source
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     #[Assert\Url]
     private ?string $url = null;
 
