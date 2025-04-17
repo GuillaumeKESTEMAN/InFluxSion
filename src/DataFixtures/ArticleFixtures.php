@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Article;
 use App\Entity\Source;
-use DateTimeImmutable;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -21,7 +21,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
                 ->setUrl("https://example.com/article-$i")
                 ->setImage("https://picsum.photos/200")
                 ->setDescription("Description for article $i")
-                ->setDate(new DateTimeImmutable('-' . rand(0, 365) . ' days'))
+                ->setDate((new DateTime())->modify('-' . rand(0, 365) . ' days'))
                 ->setSource($source);
 
             $manager->persist($article);

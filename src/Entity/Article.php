@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
-use DateTimeImmutable;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
@@ -14,20 +14,20 @@ class Article
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 500)]
     private ?string $url = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 500, nullable: true)]
     private ?string $image = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 500)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 2000, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column]
-    private ?DateTimeImmutable $date = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private \DateTime|\DateTimeInterface|null $date = null;
 
     #[ORM\ManyToOne(targetEntity: Source::class)]
     #[ORM\JoinColumn(nullable: false)]
@@ -93,12 +93,12 @@ class Article
         return $this;
     }
 
-    public function getDate(): ?DateTimeImmutable
+    public function getDate(): \DateTime|\DateTimeInterface|null
     {
         return $this->date;
     }
 
-    public function setDate(DateTimeImmutable $date): static
+    public function setDate(\DateTime|\DateTimeInterface|null $date): static
     {
         $this->date = $date;
 
