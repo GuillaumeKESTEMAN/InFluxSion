@@ -5,11 +5,18 @@
 {% block body %}
     <div class="flex justify-evenly items-center h-screen">
         <div class="flex flex-col h-fit gap-3">
-            <h1 class="text-6xl bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">Bienvenue à InFluxSion</h1>
+            <h1 class="text-6xl bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">Bienvenue à InFluxSion</h1>
             <h2 class="text-3xl text-white">Tous vos articles au même endroit.</h2>
+            <h2 class="text-xl text-white">
+                Vous avez déjà un compte ?
+                <button id="login-button"
+                        class="px-4 ml-4 py-1 text-lg text-green-400 border-2 border-green-400 hover:text-white hover:bg-green-400 rounded-full">
+                    Je me connecte
+                </button>
+            </h2>
         </div>
         <div class="relative flex flex-col h-fit">
-            <div class="absolute -inset-20 z-0 animate-pulse-slow rounded-full blur-[220px] opacity-[0.02] bg-gradient-to-r from-green-600 to-cyan-600"></div>
+            <div class="absolute -inset-20 z-0 animate-pulse-slow rounded-full blur-[220px] opacity-[0.02] bg-gradient-to-r from-green-400 to-cyan-400"></div>
 
             {{ form_errors(registrationForm) }}
             {{ form_start(registrationForm, {'attr': {'class': 'relative z-10 flex flex-col h-fit w-80 gap-2'}}) }}
@@ -26,8 +33,13 @@
                     'placeholder': 'Mot de passe'
                 }
             }) }}
-            <button type="submit" class="rounded-full h-14 text-2xl backdrop-blur-sm bg-white/5 text-green-600 border-2 border-green-600">Créer mon compte</button>
+            <button type="submit" class="rounded-full h-14 text-2xl backdrop-blur-sm bg-white/5 text-green-400 border-2 border-green-400">Créer mon compte</button>
             {{ form_end(registrationForm) }}
         </div>
     </div>
+    <script>
+        document.getElementById('login-button').addEventListener('click', () => {
+            window.location.href = 'http://localhost:8000/login';
+        });
+    </script>
 {% endblock %}
