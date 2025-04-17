@@ -20,7 +20,7 @@ class ArticleRepository extends ServiceEntityRepository
      * @param int $limit Number of articles to get
      * @return Article[] Return array of articles
      */
-    public function findLatestArticles( array $userSourcesIds, int $limit = 20): array
+    public function findLatestArticles(array $userSourcesIds, int $limit = 20): array
     {
         return $this->createQueryBuilder('article')
             ->setParameter('userSourcesId', $userSourcesIds)
