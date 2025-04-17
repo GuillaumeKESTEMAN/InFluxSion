@@ -33,6 +33,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: UserSource::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     private Collection $userSources;
 
+    #[ORM\OneToMany(targetEntity: UserArticle::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private Collection $userArticles;
+
     public function __construct()
     {
         $this->userSources = new ArrayCollection();
@@ -108,7 +111,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->userSources->add($userSource);
             $userSource->setUser($this);
         }
-
         return $this;
     }
 
@@ -120,8 +122,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $userSource->setUser(null);
             }
         }
-
         return $this;
+    }
+
+    public function addUserArticle(UserArticle $userArticle): static
+    {
+        if (!$this->userArticles->contains($userArticle)) {
+            $this->userArticles->add($userArticle);
+            $userArticle->setUser($this);
+        }
+        return $this;
+    }
+
+    public function removeUserArticle(UserArticle $userArticle): static
+    {
+        if ($this->userArticles->removeElement($userArticle)) {
+            if ($userArticle->getUser() === $this) {
+                $userArticle->setUser(null);
+            }
+        }
+        return $this;
+    }
+
+    public function getUserArticles(): Collection
+    {
+        return $this->userArticles;
+    }
+
+    public function setUserArticles(Collection $userArticles): void
+    {
+        $this->userArticles = $userArticles;
     }
 }
 

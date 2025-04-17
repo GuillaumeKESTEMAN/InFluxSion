@@ -3,22 +3,96 @@
 {% block title %}Articles{% endblock %}
 
 {% block body %}
-<h1 class="text-2xl font-bold text-center mb-8">InFluxSion</h1>
+    <h1 class="text-2xl font-bold text-center mb-8">Votre feed d'article</h1>
 
-<div class="flex flex-col items-center w-[70%] mx-auto">
-    {% for article in articles %}
-        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" class="flex items-center w-full bg-[#1D1D1D] p-4 hover:bg-[#2A2A2A] transition border-b-2 border-green-600 rounded-none">
-            <div class="flex-shrink-0 w-[120px] h-[120px]">
-                <img src="{{ article.image ?: asset('icons/logo.svg') }}" alt="{{ article.title }}" class="w-full h-full object-cover rounded-lg">
-            </div>
-            <div class="ml-4 text-[#868383]">
-                <h2 class="font-bold text-lg">{{ article.title }}</h2>
-                <p class="text-sm">{{ article.description }}</p>
-                <p class="italic text-sm mt-2">Publié le {{ article.date|date('d/m/Y') }}</p>
-            </div>
-        </a>
-    {% else %}
-        <p class="text-center text-[#868383]">Aucun article disponible.</p>
-    {% endfor %}
-</div>
+    <div class="flex flex-col items-center w-[70%] z-0 mx-auto">
+        {% for article in articles %}
+            <a href="{{ article.url }}"
+               data-article-id="{{ article.id }}"
+               data-view-article-ids="{{ viewedArticleIds|json_encode() }}"
+               class="article-link flex items-center w-full bg-[#1D1D1D] p-4 rounded-none "
+               target="_blank" rel="noopener noreferrer">
+                <div class="flex-shrink-0 w-[120px] h-[90px]">
+                    <img src="{{ article.image ?: asset('icons/logo.svg') }}" alt="{{ article.title }}" class="w-full h-full object-cover rounded-md">
+                </div>
+                <div class="ml-4 mb-8 flex flex-col items-center justify-between {{ article.id in viewedArticleIds ? 'text-gray-400' : 'text-white' }}">
+                    <h2 class="font-bold text-lg {{ article.id in viewedArticleIds ? 'text-gray-400' : 'text-green-400' }}">{{ article.title }}</h2>
+                    <p class="text-sm">{{ article.description }}</p>
+                    <p class="italic text-sm mt-2">Publié le {{ article.date|date('d/m/Y') }}</p>
+                </div>
+                <div class="relative h-[1px] w-[15%] left-[14.5%] bg-green-400 rounded-full self-end"></div>
+            </a>
+        {% else %}
+            <p class="text-center text-[#868383]">Aucun article disponible.</p>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.querySelectorAll('.article-link').forEach(link => {
+            link.addEventListener('click', onArticleClick);
+        });
+
+        function onArticleClick(event) {
+            event.preventDefault();
+
+            const link = event.currentTarget;
+            const articleId = parseInt(link.dataset.articleId);
+            const viewedArticleIds = getViewedArticleIds(link);
+            const articleUrl = link.href;
+
+            const hasAlreadyBeenViewed = viewedArticleIds.includes(articleId);
+
+            if (!hasAlreadyBeenViewed) {
+                markArticleAsViewed(articleId)
+                    .finally(() => {
+                        markArticleStyleAsViewed(link);
+                        updateViewedIds(link, articleId, viewedArticleIds);
+                        openArticleInNewTab(articleUrl);
+                    });
+            } else {
+                markArticleStyleAsViewed(link);
+                openArticleInNewTab(articleUrl);
+            }
+        }
+
+        function getViewedArticleIds(linkElement) {
+            try {
+                return JSON.parse(linkElement.getAttribute("data-view-article-ids")) || [];
+            } catch {
+                return [];
+            }
+        }
+
+        function markArticleAsViewed(articleId) {
+            return fetch(`/article/${articleId}/mark-viewed`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'same-origin'
+            });
+        }
+
+        function markArticleStyleAsViewed(linkElement) {
+            const container = linkElement.querySelector('div.ml-4');
+            const title = container.querySelector('h2');
+
+            container.classList.remove('text-white');
+            container.classList.add('text-gray-400');
+
+            title.classList.remove('text-green-400');
+            title.classList.add('text-gray-400');
+        }
+
+        function updateViewedIds(linkElement, articleId, viewedIds) {
+            viewedIds.push(articleId);
+            linkElement.setAttribute("data-view-article-ids", JSON.stringify(viewedIds));
+        }
+
+        function openArticleInNewTab(url) {
+            window.open(url, '_blank');
+        }
+    </script>
 {% endblock %}
+
