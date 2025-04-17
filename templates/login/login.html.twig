@@ -5,11 +5,18 @@
 {% block body %}
     <div class="flex justify-evenly items-center h-screen">
         <div class="flex flex-col h-fit gap-3">
-            <h1 class="text-6xl bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">Bon retour parmi nous</h1>
+            <h1 class="text-6xl bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">Bon retour parmi nous</h1>
             <h2 class="text-3xl text-white">Nous sommes ravis de vous revoir.</h2>
+            <h2 class="text-xl text-white">
+                Vous n'avez pas de compte ?
+                <button id="register-button"
+                        class="px-4 ml-4 py-1 text-lg text-green-400 border-2 border-green-400 hover:text-white hover:bg-green-400 rounded-full">
+                    Créer mon compte
+                </button>
+            </h2>
         </div>
         <div class="relative flex flex-col h-fit">
-            <div class="absolute -inset-20 z-0 animate-pulse-slow rounded-full blur-[220px] opacity-[0.02] bg-gradient-to-r from-green-400 to-cyan-600"></div>
+            <div class="absolute -inset-20 z-0 animate-pulse-slow rounded-full blur-[220px] opacity-[0.02] bg-gradient-to-r from-green-400 to-cyan-400"></div>
 
             {% if error %}
                 <div class="mb-4 p-3 rounded bg-red-100 text-red-700 border border-red-200">
@@ -37,10 +44,16 @@
                         required
                 >
                 <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-                <button class="rounded-full h-14 text-2xl backdrop-blur-sm bg-white/5 text-green-600 border-2 border-green-600">
+                <button class="rounded-full h-14 text-2xl backdrop-blur-sm bg-white/5 text-green-400 border-2 border-green-400">
                     Je me connecte
                 </button>
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('register-button').addEventListener('click', () => {
+            window.location.href = '/register';
+        });
+    </script>
 {% endblock %}
