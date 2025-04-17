@@ -12,7 +12,7 @@ class ManageSourceUseCase
 {
     public function __construct(private SourceRepository $sourceRepository, private UserSourceRepository $userSourceRepository) {}
 
-    public function addSource(string $url, string $name, $user): bool
+    public function addSource(string $url, string $name, $user): void
     {
         if (!$this->isValidRSS($url)) {
             throw new RuntimeException("L'URL fournie n'est pas un flux RSS valide.");
@@ -32,8 +32,6 @@ class ManageSourceUseCase
         $userSource->setName($name);
 
         $this->userSourceRepository->save($userSource);
-
-        return true;
     }
 
     private function isValidRSS(string $url): bool

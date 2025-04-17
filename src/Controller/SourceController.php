@@ -18,9 +18,6 @@ class SourceController extends AbstractController
     public function list(): Response
     {
         $user = $this->getUser();
-        if (!$user) {
-            return $this->redirectToRoute('app_login');
-        }
     
         $userSources = $user->getUserSources()->map(fn($userSource) => new UserSourceDTO(
             $userSource->getId(),
@@ -37,10 +34,6 @@ class SourceController extends AbstractController
     public function add(Request $request): Response
     {
         $user = $this->getUser();
-        if (!$user) {
-            return $this->redirectToRoute('app_login');
-        }
-
         $data = $request->request->all();
 
         try {
