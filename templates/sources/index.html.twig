@@ -3,18 +3,106 @@
 {% block title %}Sources{% endblock %}
 
 {% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="bg-green-500 text-white p-3 rounded-md">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('error') %}
+        <div class="bg-red-500 text-white p-3 rounded-md">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="flex flex-col ml-9 ">
+        <button id="openDialogBtn" class="flex text-[#1AD9CB] w-fit">
+            {{ ux_icon('line-md:plus-circle', {width: '40px', height: '40px'}) }}
+        </button>
+
+        <div class="flex flex-col items-center">
+            <div id="myDialog" class="hidden absolute backdrop-blur-xl flex items-center z-50 bg-white/5 p-6 rounded-lg shadow-lg w-lg">
+                <h1 class="text-3xl mb-4 bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">
+                    <span id="dialogTitle">Ajouter une source</span>
+                </h1>
+                <form class="flex items-center flex-col gap-3" action="{{ path('source_add') }}" method="POST" id="sourceForm">
+                    <input id="urlInput" class="rounded-full w-96 h-10 text-lg bg-white/5 px-6 text-gray-200"
+                        type="text" name="url" placeholder="Url de la source" readonly>
+                    <input id="nameInput" class="rounded-full w-96 h-10 text-lg bg-white/5 px-6 text-gray-200"
+                        type="text" name="name" placeholder="Nom de la source">
+                    <div class="flex justify-between">
+                        <button id="closeDialogBtn" class="px-4 py-1 text-green-400 rounded-full" type="button">Fermer</button>
+                        <button id="saveSourceBtn" type="submit" class="px-4 py-1 text-green-400 border-2 border-green-400 hover:text-white hover:bg-green-400">
+                            Valider
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <h1 class="text-2xl font-bold text-center mb-8">Liste des Sources</h1>
 
     <div class="flex flex-col items-center w-[70%] mx-auto">
         {% for source in sources %}
-            <a href="{{ source.url }}" target="_blank" rel="noopener noreferrer" class="flex items-center w-full bg-[#1D1D1D] p-4 hover:bg-[#2A2A2A] transition border-b-2 border-green-600 rounded-none">
+            <div class="flex items-center w-full bg-[#1D1D1D] p-4 hover:bg-[#2A2A2A] transition border-b-2 border-green-600 rounded-none">
                 <div class="ml-4 text-[#868383]">
-                    <h2 class="font-bold text-lg">{{ source.name }}</h2>
-                    <p class="text-sm">{{ source.url }}</p>
+                    <div class="flex items-center gap-4">                    
+                        <h2 class="font-bold text-lg">{{ source.name }}</h2>
+                        <button class="editSourceBtn bg-blue-500 text-white px-4 py-2 rounded-md"
+                            data-url="{{ source.url }}"
+                            data-name="{{ source.name }}"
+                            data-id="{{ source.id }}">
+                            Modifier
+                        </button>
+                    </div>
+                    <a href="{{ source.url }}" class="text-sm" target="_blank">{{ source.url }}</a> 
                 </div>
-            </a>
+            </div>
         {% else %}
             <p class="text-center text-[#868383]">Aucune source disponible.</p>
         {% endfor %}
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dialog = document.getElementById("myDialog");
+            const urlInput = document.getElementById("urlInput");
+            const nameInput = document.getElementById("nameInput");
+            const dialogTitle = document.getElementById("dialogTitle");
+            const sourceForm = document.getElementById("sourceForm");
+
+            document.querySelectorAll(".editSourceBtn").forEach(button => {
+                button.addEventListener("click", function () {
+                    const sourceUrl = this.getAttribute("data-url");
+                    const sourceName = this.getAttribute("data-name");
+                    const sourceId = this.getAttribute("data-id");
+
+                    urlInput.value = sourceUrl;
+                    nameInput.value = sourceName;
+                    sourceForm.action = `/source/edit/${sourceId}`;
+                    dialogTitle.textContent = "Modifier une source";
+
+                    urlInput.setAttribute("readonly", "true");
+                    dialog.style.display = "block";
+                });
+            });
+
+            document.getElementById("openDialogBtn").addEventListener("click", function () {
+                urlInput.value = "";
+                nameInput.value = "";
+                sourceForm.action = "/source/add";
+                dialogTitle.textContent = "Ajouter une source";
+
+                urlInput.removeAttribute("readonly");
+                dialog.style.display = "block";
+            });
+
+            document.getElementById("closeDialogBtn").addEventListener("click", function () {
+                dialog.style.display = "none";
+            });
+        });
+    </script>
+
 {% endblock %}
