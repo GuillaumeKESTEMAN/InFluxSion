@@ -5,7 +5,7 @@
 {% block body %}
 
     {% for message in app.flashes('success') %}
-        <div class="bg-green-500 text-white p-3 rounded-md">
+        <div class="bg-green-400 text-white p-3 rounded-md">
             {{ message }}
         </div>
     {% endfor %}
@@ -17,12 +17,12 @@
     {% endfor %}
 
     <div class="flex flex-col ml-9 ">
-        <button id="openDialogBtn" class="flex text-[#1AD9CB] w-fit">
-            {{ ux_icon('line-md:plus-circle', {width: '40px', height: '40px'}) }}
+        <button id="openDialogBtn" class="flex text-[#1AD9CB] w-fit self-end mr-60">
+            {{ ux_icon('line-md:plus-circle', {width: '40px', height: '50px'}) }}
         </button>
 
         <div class="flex flex-col items-center">
-            <div id="myDialog" class="hidden absolute backdrop-blur-xl flex items-center z-50 bg-white/5 p-6 rounded-lg shadow-lg w-lg">
+            <div id="myDialog" class="hidden absolute backdrop-blur-2xl flex items-center z-50 bg-white/5 p-6 rounded-lg shadow-lg w-lg">
                 <h1 class="text-3xl mb-4 bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">
                     <span id="dialogTitle">Ajouter une source</span>
                 </h1>
@@ -33,7 +33,7 @@
                         type="text" name="name" placeholder="Nom de la source">
                     <div class="flex justify-between">
                         <button id="closeDialogBtn" class="px-4 py-1 text-green-400 rounded-full" type="button">Fermer</button>
-                        <button id="saveSourceBtn" type="submit" class="px-4 py-1 text-green-400 border-2 border-green-400 hover:text-white hover:bg-green-400">
+                        <button id="saveSourceBtn" type="submit" class="px-4 py-1 text-green-400 border-2 border-green-400 hover:text-white hover:bg-green-400 rounded-full">
                             Valider
                         </button>
                     </div>
@@ -46,23 +46,24 @@
 
     <div class="flex flex-col items-center w-[70%] mx-auto">
         {% for source in sources %}
-            <div class="flex items-center w-full bg-[#1D1D1D] p-4 hover:bg-[#2A2A2A] transition border-b-2 border-green-600 rounded-none">
-                <div class="ml-4 text-[#868383]">
+            <div class="flex items-center w-full bg-[#1D1D1D] p-4 transition rounded-none">
+                <div class="ml-4 text-[#868383] w-full">
                     <div class="flex items-center gap-4">                    
-                        <h2 class="font-bold text-lg">{{ source.name }}</h2>
-                        <button class="editSourceBtn bg-blue-500 text-white px-4 py-2 rounded-md"
+                        <h2 class="font-bold text-lg text-white">{{ source.name }}</h2>
+                        <button class="editSourceBtn px-4 py-1 text-green-400 rounded-full"
                             data-url="{{ source.url }}"
                             data-name="{{ source.name }}"
                             data-id="{{ source.id }}">
                             Modifier
                         </button>
-                        <button class="deleteUserSourceBtn bg-red-500 text-white px-4 py-2 rounded-md"
+                        <button class="deleteUserSourceBtn px-4 py-1 text-cyan-400 border-2 border-cyan-400 hover:text-white hover:bg-cyan-400 rounded-full"
                             data-id="{{ source.id }}">
                             Supprimer
                         </button>
                     </div>
-                    <a href="{{ source.url }}" class="text-sm" target="_blank">{{ source.url }}</a> 
+                    <a href="{{ source.url }}" class="text-sm text-white" target="_blank">{{ source.url }}</a>
                 </div>
+                <div class="relative h-[1px] w-[15%] right-[43.5%] bg-green-400 rounded-full self-end"></div>
             </div>
         {% else %}
             <p class="text-center text-[#868383]">Aucune source disponible.</p>

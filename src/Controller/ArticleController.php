@@ -16,7 +16,12 @@ class ArticleController extends AbstractController
         UserArticleRepository $userArticleRepository
     ): Response
     {
-        $userSourcesIds = $this->getUser()->getUserSources()->map(fn ($userSource) => $userSource->getId())->toArray();
+        $userSourcesIds = $this->getUser()
+            ->getUserSources()
+            ->map(fn ($userSource)
+                => $userSource
+                ->getId()
+            )->toArray();
         $latestArticles = $articleRepository->findLatestArticles($userSourcesIds, 10);
 
         $viewedArticleIds = $userArticleRepository

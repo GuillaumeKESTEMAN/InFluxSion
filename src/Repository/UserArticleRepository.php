@@ -27,6 +27,9 @@ class UserArticleRepository extends ServiceEntityRepository
             'article' => $article,
         ]);
 
+        if ($existing && $existing->getHasViewed()) {
+            return;
+        }
         if (!$existing) {
             $userArticle = new UserArticle();
             $userArticle->setUser($user);
@@ -34,9 +37,7 @@ class UserArticleRepository extends ServiceEntityRepository
             $userArticle->setHasViewed(true);
             $this->em->persist($userArticle);
         }else {
-            if (!$existing->getHasViewed()) {
-                $existing->setHasViewed(true);
-            }
+            $existing->setHasViewed(true);
         }
         $this->em->flush();
     }
