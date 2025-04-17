@@ -15,7 +15,6 @@ readonly class ArticleService
 
     public function fetchAndSaveArticlesFromRss(Source $source): array
     {
-
         try {
             $rssFeed = $this->reader::import($source->getUrl());
         } catch (\Exception $e) {
@@ -24,14 +23,26 @@ readonly class ArticleService
 
         $articleRepository = $this->entityManager->getRepository(Article::class);
 
+        $rssUrls = [];
+        foreach ($rssFeed as $item) {
+            $rssUrls[] = (string)$item->getLink();
+        }
+
+        $existingUrls = $articleRepository->createQueryBuilder('a')
+            ->select('a.url')
+            ->where('a.url IN (:urls)')
+            ->setParameter('urls', $rssUrls)
+            ->getQuery()
+            ->getResult();
+
+        $existingUrls = array_column($existingUrls, 'url');
+
         $articles = [];
 
         foreach ($rssFeed as $item) {
             $url = (string)$item->getLink();
 
-            $existingArticle = $articleRepository->findOneBy(['url' => $url]);
-
-            if (!$existingArticle) {
+            if (!in_array($url, $existingUrls, true)) {
                 $article = new Article();
                 $article->setUrl($url)
                     ->setTitle($item->getTitle())
@@ -49,5 +60,4 @@ readonly class ArticleService
         $this->entityManager->flush();
 
         return $articles;
-    }
-}
+    }}
