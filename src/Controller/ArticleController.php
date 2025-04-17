@@ -16,6 +16,7 @@ class ArticleController extends AbstractController
         UserArticleRepository $userArticleRepository
     ): Response
     {
+
         $userSourcesIds = $this->getUser()
             ->getUserSources()
             ->map(fn ($userSource)

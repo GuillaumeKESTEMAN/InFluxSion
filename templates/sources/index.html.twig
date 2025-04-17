@@ -18,11 +18,12 @@
 
     <div class="flex flex-col ml-9 ">
         <button id="openDialogBtn" class="flex text-[#1AD9CB] w-fit self-end mr-60">
-            {{ ux_icon('line-md:plus-circle', {width: '40px', height: '50px'}) }}
+            {{ ux_icon('line-md:plus-circle', {width: '40px', height: '40px'}) }}
         </button>
 
         <div class="flex flex-col items-center">
             <div id="myDialog" class="hidden absolute backdrop-blur-2xl flex items-center z-50 bg-white/5 p-6 rounded-lg shadow-lg w-lg">
+
                 <h1 class="text-3xl mb-4 bg-gradient-to-r from-green-600 to-cyan-600 bg-clip-text text-transparent">
                     <span id="dialogTitle">Ajouter une source</span>
                 </h1>
@@ -51,6 +52,7 @@
                     <div class="flex items-center gap-4">                    
                         <h2 class="font-bold text-lg text-white">{{ source.name }}</h2>
                         <button class="editSourceBtn px-4 py-1 text-green-400 rounded-full"
+
                             data-url="{{ source.url }}"
                             data-name="{{ source.name }}"
                             data-id="{{ source.id }}">
