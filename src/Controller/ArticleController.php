@@ -23,7 +23,7 @@ class ArticleController extends AbstractController
                 => $userSource
                 ->getId()
             )->toArray();
-        $latestArticles = $articleRepository->findLatestArticles($userSourcesIds, 10);
+        $latestArticles = $articleRepository->findLatestArticles($userSourcesIds, 20);
 
         $viewedArticleIds = $userArticleRepository
             ->findViewedArticleIdsByUserAndArticles($this->getUser(), $latestArticles);
