@@ -81,7 +81,7 @@
 
                     urlInput.value = sourceUrl;
                     nameInput.value = sourceName;
-                    sourceForm.action = `/source/edit/${sourceId}`;
+                    sourceForm.action = "/source/edit/${sourceId}";
                     dialogTitle.textContent = "Modifier une source";
 
                     urlInput.setAttribute("readonly", "true");
@@ -92,7 +92,7 @@
             document.getElementById("openDialogBtn").addEventListener("click", function () {
                 urlInput.value = "";
                 nameInput.value = "";
-                sourceForm.action = `/source/add`;
+                sourceForm.action = "/source/add";
                 dialogTitle.textContent = "Ajouter une source";
 
                 urlInput.removeAttribute("readonly");
