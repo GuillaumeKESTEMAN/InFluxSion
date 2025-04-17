@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\DTO\UserSourceDTO;
 use App\Repository\UserSourceRepository;
+use App\Service\ArticleService;
 use App\UseCase\ManageSourceUseCase;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SourceController extends AbstractController
 {
-    public function __construct(private ManageSourceUseCase $manageSourceUseCase)
+    public function __construct(private ManageSourceUseCase $manageSourceUseCase, private readonly ArticleService $articleService,
+    )
     {
     }
 
@@ -40,7 +42,8 @@ class SourceController extends AbstractController
         $data = $request->request->all();
 
         try {
-            $this->manageSourceUseCase->addSource($data['url'], $data['name'], $user);
+            $source = $this->manageSourceUseCase->addSource($data['url'], $data['name'], $user);
+            $this->articleService->fetchAndSaveArticlesFromRss($source);
             $this->addFlash('success', "Source ajoutée avec succès !");
         } catch (RuntimeException $e) {
             $this->addFlash('error', $e->getMessage());

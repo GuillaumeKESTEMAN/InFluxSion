@@ -31,7 +31,6 @@ class UserSourceFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-
     public function getDependencies(): array
     {
         return [UserFixtures::class, SourceFixtures::class];
