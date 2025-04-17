@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\DTO\UserSourceDTO;
-use App\Repository\SourceRepository;
 use App\Repository\UserSourceRepository;
-use App\Service\ArticleService;
 use App\UseCase\ManageSourceUseCase;
 use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,21 +81,5 @@ class SourceController extends AbstractController
         }
 
         return $this->redirectToRoute('sources');
-    }
-    
-    #[Route('/sources/{id}/articles', name: 'save_articles', methods: ['GET'])]
-    public function saveArticles(
-        int              $id,
-        SourceRepository $sourceRepository,
-        ArticleService   $articleService
-    ): Response
-    {
-        $source = $sourceRepository->find($id);
-
-        if (!$source) {
-            return $this->json(['error' => 'Source not found'], Response::HTTP_NOT_FOUND);
-        }
-
-        return $this->json($articleService->fetchAndSaveArticlesFromRss($source), Response::HTTP_OK);
     }
 }
