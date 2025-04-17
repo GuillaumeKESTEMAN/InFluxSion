@@ -68,5 +68,18 @@ class SourceController extends AbstractController
         }
     
         return $this->redirectToRoute('sources');
-    } 
+    }
+
+    #[Route('/source/delete/{id}', name: 'source_delete', methods: ['POST'])]
+    public function deleteUserSource(int $id): Response
+    {
+        try {
+            $this->manageSourceUseCase->deleteUserSource($id);
+            $this->addFlash('success', "Source supprimée de votre liste !");
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+
+        return $this->redirectToRoute('sources');
+    }
 }

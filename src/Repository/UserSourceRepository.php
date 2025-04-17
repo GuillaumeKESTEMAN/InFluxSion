@@ -25,4 +25,10 @@ class UserSourceRepository extends ServiceEntityRepository
         $this->entityManager->persist($userSource);
         $this->entityManager->flush();
     }
+
+    public function deleteUserSource(UserSource $userSource): void
+    {
+        $this->entityManager->remove($userSource);
+        $this->entityManager->flush();
+    }
 }
