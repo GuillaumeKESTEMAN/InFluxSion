@@ -56,6 +56,10 @@
                             data-id="{{ source.id }}">
                             Modifier
                         </button>
+                        <button class="deleteUserSourceBtn bg-red-500 text-white px-4 py-2 rounded-md"
+                            data-id="{{ source.id }}">
+                            Supprimer
+                        </button>
                     </div>
                     <a href="{{ source.url }}" class="text-sm" target="_blank">{{ source.url }}</a> 
                 </div>
@@ -101,6 +105,16 @@
 
             document.getElementById("closeDialogBtn").addEventListener("click", function () {
                 dialog.style.display = "none";
+            });
+
+            document.querySelectorAll(".deleteUserSourceBtn").forEach(button => {
+                button.addEventListener("click", function () {
+                    const userSourceId = this.getAttribute("data-id");
+
+                    fetch(`/source/delete/${userSourceId}`, { method: "POST" })
+                        .then(() => location.reload())
+                        .catch(() => alert("Erreur lors de la suppression."));
+                });
             });
         });
     </script>
