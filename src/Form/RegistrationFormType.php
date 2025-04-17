@@ -20,6 +20,7 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                "label" => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'l adresse email doit être renseignée',
@@ -30,6 +31,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
+                "label" => false,
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
